@@ -68,7 +68,6 @@ export const IndexPageTemplate = ({ image, title, subheading }) => (
                   <h3 className="has-text-weight-semibold is-size-2">
                     See all activities
                   </h3>
-                  {/* Filters go here */}
                   <BlogRoll />
                 </div>
               </div>
@@ -87,14 +86,14 @@ IndexPageTemplate.propTypes = {
 };
 
 const IndexPage = ({ data }) => {
-  const { frontmatter } = data.markdownRemark;
+  const { frontmatter: currentPage } = data.markdownRemark;
 
   return (
     <Layout>
       <IndexPageTemplate
-        image={frontmatter.image}
-        title={frontmatter.title}
-        subheading={frontmatter.subheading}
+        image={currentPage.image}
+        title={currentPage.title}
+        subheading={currentPage.subheading}
       />
     </Layout>
   );
