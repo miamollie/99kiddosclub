@@ -9,7 +9,7 @@ tags:
   - All ages
 ---
 
-![pillows](/img/pillow.jpg)
+![](/img/pillow.jpg)
 
 ## Pillows are the new cushions
 

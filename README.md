@@ -6,6 +6,8 @@ Small site for 99ers to share activities and resources to keep their kiddos amus
 
 ## Todo
 
-- animate posts on unmount? 
-- add example post 
-- paginate results.. with filters?
+- animate posts on unmount?
+- add example post
+- paginate results.. with filters
+- add "add new post" button
+- styles (rainbow headings)

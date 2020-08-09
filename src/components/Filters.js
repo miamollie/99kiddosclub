@@ -4,13 +4,13 @@ const Filters = ({ filters, selectAll, clearAll, toggle, isActive }) => {
   if (!filters) return;
   return (
     <div className="buttons">
-      <button className="button is-info is-rounded" onClick={selectAll}>
+      <button className="button is-rounded" onClick={selectAll}>
         Select all
       </button>
-
+      {/* TODO should have FA tick icon when selected */}
       {filters.map(({ fieldValue: t }) => (
         <button
-          className={`button is-rounded ${isActive(t) && "is-selected"}`}
+          className={`button is-rounded ${isActive(t) ? "is-selected" : ""}`}
           onClick={() => toggle(t)}
           key={t}
         >
@@ -19,9 +19,6 @@ const Filters = ({ filters, selectAll, clearAll, toggle, isActive }) => {
       ))}
       <button className="button is-rounded is-light" onClick={clearAll}>
         Clear
-        <span className="icon is-small">
-          <i className="fas fa-times"></i>
-        </span>
       </button>
     </div>
   );

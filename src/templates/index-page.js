@@ -65,9 +65,6 @@ export const IndexPageTemplate = ({ image, title, subheading }) => (
             <div className="column is-10 is-offset-1">
               <div className="content">
                 <div className="column is-12">
-                  <h3 className="has-text-weight-semibold is-size-2">
-                    See all activities
-                  </h3>
                   <BlogRoll />
                 </div>
               </div>

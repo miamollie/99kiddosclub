@@ -6,6 +6,7 @@ export function useFilters({ initialFilters = [] }) {
 
   function toggle(f) {
     if (activeFilters.includes(f)) {
+      console.log(f);
       setActiveFilters(activeFilters.filter((v) => v !== f));
     } else {
       setActiveFilters([...activeFilters, f]);
