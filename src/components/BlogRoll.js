@@ -1,17 +1,47 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { Link, graphql, StaticQuery } from "gatsby";
+import React, { useEffect, useState } from "react";
+import { Link, graphql, useStaticQuery } from "gatsby";
 import PreviewCompatibleImage from "./PreviewCompatibleImage";
+import { useFilters } from "./hooks/useFilters";
+import Filters from "./Filters";
 
-class BlogRoll extends React.Component {
-  render() {
-    const { data } = this.props;
-    const { edges: posts } = data.allMarkdownRemark;
+function BlogRoll() {
+  const data = useStaticQuery(query);
+  const { edges: posts, group: allTags } = data.allMarkdownRemark;
+  const [activePosts, setActivePosts] = useState(posts);
+  const initialFilters = allTags.map((t) => t.fieldValue);
+  const { activeFilters, isActive, toggle, selectAll, clearAll } = useFilters({
+    initialFilters,
+  });
 
-    return (
-      <div className="columns is-multiline">
-        {posts &&
-          posts.map(({ node: post }) => (
+  //todo move to lib and test, usecallback
+  function filterPosts(arr, activeFilters) {
+    return arr.filter(
+      ({
+        node: {
+          frontmatter: { tags },
+        },
+      }) => {
+        return tags.some((t) => activeFilters.includes(t));
+      }
+    );
+  }
+
+  useEffect(() => {
+    setActivePosts(filterPosts(posts, activeFilters));
+  }, [posts, activeFilters]); //usememo over the dep array..???
+
+  return (
+    <div className="columns is-multiline">
+      <Filters
+        filters={allTags}
+        isActive={isActive}
+        toggle={toggle}
+        selectAll={selectAll}
+        clearAll={clearAll}
+      />
+      {!activePosts.length
+        ? "no posts"
+        : activePosts.map(({ node: post }) => (
             <div className="is-parent column is-6" key={post.id}>
               <article
                 className={`blog-list-item tile is-child box notification`}
@@ -34,7 +64,10 @@ class BlogRoll extends React.Component {
                     >
                       {post.frontmatter.title}
                     </Link>
-                    {/* tags */}
+                    {post.frontmatter.tags &&
+                      post.frontmatter.tags.map((t) => (
+                        <span key={t}>{t}</span>
+                      ))}
                   </p>
                 </header>
                 <p>
@@ -48,50 +81,42 @@ class BlogRoll extends React.Component {
               </article>
             </div>
           ))}
-      </div>
-    );
-  }
+    </div>
+  );
 }
 
-BlogRoll.propTypes = {
-  data: PropTypes.shape({
-    allMarkdownRemark: PropTypes.shape({
-      edges: PropTypes.array,
-    }),
-  }),
-};
-// get tags on query
-export default () => (
-  <StaticQuery
-    query={graphql`
-      query BlogRollQuery {
-        allMarkdownRemark(
-          sort: { order: DESC, fields: [frontmatter___date] }
-          filter: { frontmatter: { templateKey: { eq: "blog-post" } } }
-        ) {
-          edges {
-            node {
-              excerpt(pruneLength: 200)
-              id
-              fields {
-                slug
-              }
-              frontmatter {
-                title
-                templateKey
-                featuredimage {
-                  childImageSharp {
-                    fluid(maxWidth: 120, quality: 100) {
-                      ...GatsbyImageSharpFluid
-                    }
-                  }
+export default BlogRoll;
+
+const query = graphql`
+  query BlogRollQuery {
+    allMarkdownRemark(
+      sort: { order: DESC, fields: [frontmatter___date] }
+      filter: { frontmatter: { templateKey: { eq: "blog-post" } } }
+    ) {
+      group(field: frontmatter___tags) {
+        fieldValue
+      }
+      edges {
+        node {
+          excerpt(pruneLength: 200)
+          id
+          fields {
+            slug
+          }
+          frontmatter {
+            title
+            tags
+            templateKey
+            featuredimage {
+              childImageSharp {
+                fluid(maxWidth: 120, quality: 100) {
+                  ...GatsbyImageSharpFluid
                 }
               }
             }
           }
         }
       }
-    `}
-    render={(data, count) => <BlogRoll data={data} count={count} />}
-  />
-);
+    }
+  }
+`;
