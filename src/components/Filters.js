@@ -10,7 +10,7 @@ const Filters = ({ filters, selectAll, clearAll, toggle, isActive }) => {
       {/* TODO should have FA tick icon when selected */}
       {filters.map(({ fieldValue: t }) => (
         <button
-          className={`button is-rounded ${isActive(t) ? "is-selected" : ""}`}
+          className={`button is-rounded ${isActive(t) ? "is-primary" : ""}`}
           onClick={() => toggle(t)}
           key={t}
         >
