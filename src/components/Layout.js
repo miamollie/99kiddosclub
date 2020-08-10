@@ -3,6 +3,7 @@ import { Helmet } from "react-helmet";
 import "./all.sass";
 import useSiteMetadata from "./SiteMetadata";
 import { withPrefix } from "gatsby";
+import AddPostButton from "./AddPostButton";
 
 const TemplateWrapper = ({ children }) => {
   const { title, description } = useSiteMetadata();
@@ -36,6 +37,7 @@ const TemplateWrapper = ({ children }) => {
         <meta property="og:title" content={title} />
         <meta property="og:url" content="/" />
       </Helmet>
+      <AddPostButton />
       <main>{children}</main>
     </div>
   );
