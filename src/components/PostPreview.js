@@ -1,6 +1,6 @@
 import React from "react";
 import PreviewCompatibleImage from "./PreviewCompatibleImage";
-import AniLink from "gatsby-plugin-transition-link/AniLink";
+import { Link } from "./Link";
 
 import Tags from "./Tags";
 
@@ -17,7 +17,7 @@ export default function PostPreview({ imgSrc, excert, slug, title, tags }) {
         </figure>
       </div>
       <div className="card-content">
-        <AniLink
+        <Link
           cover
           duration={1}
           bg="
@@ -33,7 +33,7 @@ export default function PostPreview({ imgSrc, excert, slug, title, tags }) {
           to={slug}
         >
           {title}
-        </AniLink>
+        </Link>
         <div className="media">
           <div className="content">
             {excert}

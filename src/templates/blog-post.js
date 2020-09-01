@@ -1,11 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Helmet } from "react-helmet";
-import { graphql } from "gatsby";
+import { graphql, Link } from "gatsby";
 import Layout from "../components/Layout";
 import Content, { HTMLContent } from "../components/Content";
 import Tags from "../components/Tags";
-import AniLink from "gatsby-plugin-transition-link/AniLink";
 
 export const BlogPostTemplate = ({
   content,
@@ -24,9 +23,9 @@ export const BlogPostTemplate = ({
       <div className="container content">
         <div className="columns">
           <div className="column is-10 is-offset-1">
-            <AniLink className="is-size-7" to="/">
+            <Link className="is-size-7" to="/">
               Go back
-            </AniLink>
+            </Link>
             <h1 className="title is-size-2 has-text-weight-bold is-bold-light has-text-primary">
               {title}
             </h1>
