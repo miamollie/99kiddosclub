@@ -16,5 +16,5 @@ and visiting `http://localhost:8000/`
 
 - animate posts on mount?
 - add example post
-- paginate results.. with filters, use fetch instdea of build time 
 - styles (rainbow headings)
+- add tests for filters, publish as npm package

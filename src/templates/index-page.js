@@ -5,7 +5,7 @@ import { graphql } from "gatsby";
 import Layout from "../components/Layout";
 import BlogRoll from "../components/BlogRoll";
 
-export const IndexPageTemplate = ({ image, title, subheading }) => (
+export const IndexPageTemplate = ({ image, title, subheading, isCMS }) => (
   <div>
     <div
       className="full-width-image margin-top-0"
@@ -64,9 +64,7 @@ export const IndexPageTemplate = ({ image, title, subheading }) => (
           <div className="columns">
             <div className="column is-10 is-offset-1">
               <div className="content">
-                <div className="column is-12">
-                  <BlogRoll />
-                </div>
+                <div className="column is-12">{!isCMS && <BlogRoll />}</div>
               </div>
             </div>
           </div>
